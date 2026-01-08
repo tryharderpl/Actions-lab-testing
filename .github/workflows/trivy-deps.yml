@@ -6,7 +6,7 @@ on:
   pull_request:
     branches: [main]
   schedule:
-    - cron: "0 6 * * *"
+    - cron: '0 6 * * *'
   workflow_dispatch:
 
 permissions:
@@ -18,7 +18,7 @@ jobs:
   scan:
     name: Scan Dependencies
     runs-on: ubuntu-latest
-
+    
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -26,26 +26,26 @@ jobs:
       - name: Run Trivy
         uses: aquasecurity/trivy-action@0.28.0
         with:
-          scan-type: "fs"
-          scan-ref: "."
-          scanners: "vuln"
-          severity: "CRITICAL,HIGH"
-          format: "table"
-          exit-code: "0"
+          scan-type: 'fs'
+          scan-ref: '.'
+          scanners: 'vuln'
+          severity: 'CRITICAL,HIGH'
+          format: 'table'
+          exit-code: '0'
 
       - name: Run Trivy (SARIF)
         uses: aquasecurity/trivy-action@0.28.0
         with:
-          scan-type: "fs"
-          scan-ref: "."
-          scanners: "vuln"
-          severity: "CRITICAL,HIGH"
-          format: "sarif"
-          output: "results.sarif"
-          exit-code: "0"
+          scan-type: 'fs'
+          scan-ref: '.'
+          scanners: 'vuln'
+          severity: 'CRITICAL,HIGH'
+          format: 'sarif'
+          output: 'results.sarif'
+          exit-code: '0'
 
       - name: Upload to GitHub Security
         uses: github/codeql-action/upload-sarif@v4
         if: always()
         with:
-          sarif_file: "results.sarif"
+          sarif_file: 'results.sarif'
